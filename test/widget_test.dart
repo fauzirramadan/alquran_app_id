@@ -1,0 +1,4 @@
+
+
+  // Get Detail Surah
+
