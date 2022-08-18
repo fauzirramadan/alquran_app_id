@@ -1,1 +1,1 @@
-const String baseUrl = "https://api.npoint.io/99c279bb173a6e28359c/";
+const String baseUrl = "https://quran-api-inky.vercel.app/surah";

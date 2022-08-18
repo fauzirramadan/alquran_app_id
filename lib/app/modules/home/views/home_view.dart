@@ -1,5 +1,8 @@
 import 'package:alquran_app_id/app/data/constant.dart';
 import 'package:alquran_app_id/app/data/models/surah.dart';
+import 'package:alquran_app_id/app/routes/app_pages.dart';
+import 'package:alquran_app_id/utils/custom_loaders.dart';
+import 'package:alquran_app_id/utils/dot_type.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,12 +15,12 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.only(top: 50),
+        margin: const EdgeInsets.only(top: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              padding: EdgeInsets.only(left: 24),
+              padding: const EdgeInsets.only(left: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
@@ -100,68 +103,78 @@ class HomeView extends GetView<HomeController> {
               height: 10,
             ),
             Expanded(
-                child: FutureBuilder<List<Surah>>(
-                    future: controller.getAllSurah(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                            child: CircularProgressIndicator(
-                          color: purple3,
-                        ));
-                      } else if (!snapshot.hasData) {
-                        return const Center(
-                          child: Text("Connection error"),
-                        );
-                      }
-                      print(snapshot.data);
+              child: FutureBuilder<List<Surah>>(
+                future: controller.getAllSurah(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                        child: ColorLoader5(
+                      dotOneColor: purple1,
+                      dotTwoColor: purple2,
+                      dotThreeColor: purple3,
+                      dotType: DotType.circle,
+                      dotIcon: const Icon(Icons.adjust),
+                    ));
+                  } else if (!snapshot.hasData) {
+                    return const Center(
+                      child: Text("Connection error"),
+                    );
+                  }
+                  print(snapshot.data);
 
-                      return ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return Divider();
+                  return ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.data?.length ?? 0,
+                    itemBuilder: (BuildContext context, index) {
+                      Surah surah = snapshot.data![index];
+                      return Container(
+                        child: ListTile(
+                          onTap: () {
+                            Get.toNamed(Routes.DETAIL_SURAH, arguments: surah);
                           },
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: snapshot.data?.length ?? 0,
-                          itemBuilder: (BuildContext context, index) {
-                            Surah surah = snapshot.data![index];
-                            return Container(
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage: const AssetImage(
-                                        "assets/images/circle_custom.png"),
-                                    child: Text(
-                                      "${surah.nomor}",
-                                      style: const TextStyle(color: purple2),
-                                    )),
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${surah.nama}",
-                                      style: const TextStyle(
-                                          color: purple2,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "${surah.type.toString().split('Type.').last} | ${surah.ayat} ayat",
-                                      style: const TextStyle(
-                                        color: grey,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                trailing: Text(
-                                  "${surah.asma}",
-                                  style: const TextStyle(
-                                      color: purple3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                          leading: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: const AssetImage(
+                                  "assets/images/circle_custom.png"),
+                              child: Text(
+                                "${surah.number}",
+                                style: const TextStyle(color: purple2),
+                              )),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${surah.name?.transliteration?.id}",
+                                style: const TextStyle(
+                                    color: purple2,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            );
-                          });
-                    }))
+                              Text(
+                                "${surah.revelation?.id} | ${surah.numberOfVerses} ayat",
+                                style: const TextStyle(
+                                  color: grey,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: Text(
+                            "${surah.name?.short}",
+                            style: const TextStyle(
+                                color: purple3,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
