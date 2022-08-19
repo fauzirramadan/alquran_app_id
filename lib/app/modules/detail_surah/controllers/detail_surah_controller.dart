@@ -7,11 +7,15 @@ import 'package:http/http.dart' as http;
 
 class DetailSurahController extends GetxController {
   // Get detail surah
-  Future<DetailSurah> getDetaillSurah(String id) async {
-    var res = await http.get(Uri.parse("$baseUrl/surah/$id"));
-    Map<String, dynamic> data =
-        (json.decode(res.body) as Map<String, dynamic>)["data"];
+  Future<List<DetailSurah>> getDetailSurah(String id) async {
+    var res = await http
+        .get(Uri.parse("https://api.npoint.io/99c279bb173a6e28359c/surat/$id"));
+    List? data = (json.decode(res.body));
 
-    return DetailSurah.fromJson(data);
+    if (data == null || data.isEmpty) {
+      return [];
+    } else {
+      return data.map((e) => DetailSurah.fromJson(e)).toList();
+    }
   }
 }

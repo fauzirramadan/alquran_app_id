@@ -30,7 +30,7 @@ class HomeView extends GetView<HomeController> {
                           fontSize: 18,
                           fontWeight: FontWeight.w600)),
                   Text(
-                    "Fauzi Ramadhan",
+                    "User",
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
