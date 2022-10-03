@@ -164,6 +164,8 @@ class HomeView extends GetView<HomeController> {
                           trailing: Text(
                             "${surah.name?.short}",
                             style: const TextStyle(
+                                fontFamily:
+                                    "KFGQPC Uthmanic Script HAFS Regular",
                                 color: purple3,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),

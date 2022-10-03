@@ -106,8 +106,8 @@ class DetailSurahView extends GetView<DetailSurahController> {
                           Text(
                             "${surah.name?.short}",
                             style: const TextStyle(
+                              fontFamily: "KFGQPC Uthmanic Script HAFS Regular",
                               fontSize: 35,
-                              fontStyle: FontStyle.italic,
                               color: Colors.white,
                             ),
                           )
@@ -197,6 +197,8 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                   child: Text(
                                     "${snapshot.data![index].ar}",
                                     style: const TextStyle(
+                                        fontFamily:
+                                            "KFGQPC Uthmanic Script HAFS Regular",
                                         fontSize: 24,
                                         color: purple2,
                                         fontWeight: FontWeight.bold),
