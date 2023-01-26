@@ -9,7 +9,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     GetMaterialApp(
-      theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
+      theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme(),),
       title: "Application",
       initialRoute: Routes.INTRODUCTION,
       getPages: AppPages.routes,
